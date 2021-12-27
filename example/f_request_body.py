@@ -6,7 +6,7 @@
 @file: f_request_body.py 
 @time: 2021/12/27 15:39 
 """
-from typing import Optional
+from typing import Optional, List
 from fastapi import FastAPI, Query
 from pydantic import BaseModel
 
@@ -77,9 +77,34 @@ app = FastAPI()
 #     return results
 
 # Make it required
-@app.get("/items")
-async def read_items(q: str = Query(..., min_length= 3)):
-    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
-    if q:
-        results.update({"q": q})
-    return results
+# @app.get("/items")
+# async def read_items(q: str = Query(..., min_length= 3)):
+#     results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+#     if q:
+#         results.update({"q": q})
+#     return results
+
+# Query parameter list / multiple values
+# @app.get("/items/")
+# async def read_items(q: Optional[List[str]] = Query(None)):
+#     query_items = {"q": q}
+#     return query_items
+
+# http://127.0.0.1:8000/items/?q=22,22
+# """{
+# "q": [
+# "22,22"
+# ]
+# }"""
+
+# Query parameter list / multiple values with defaults
+# @app.get("/items/")
+# async def read_items(q: List[str] = Query(["Foo", "Bar"])):
+#     query_items = {"q": q}
+#     return query_items
+
+# Using list
+@app.get("/items/")
+async def read_items(q: list = Query([])):
+    query_item = {"q": q}
+    return query_item
