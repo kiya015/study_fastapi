@@ -104,7 +104,17 @@ app = FastAPI()
 #     return query_items
 
 # Using list
-@app.get("/items/")
-async def read_items(q: list = Query([])):
-    query_item = {"q": q}
-    return query_item
+# @app.get("/items/")
+# async def read_items(q: list = Query([])):
+#     query_item = {"q": q}
+#     return query_item
+
+
+# Declare more metadata (申明更多元数据) deprecated（弃用）
+# @app.get("/items/")
+# async def read_items(q: Optional[str] = Query(None, min_length=3, title="6666666666", deprecated=True,
+#                                               alias="item-query", description="Query string for the items")):
+#     results = {"item": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+#     if q:
+#         results.update({"q": q})
+#     return results
